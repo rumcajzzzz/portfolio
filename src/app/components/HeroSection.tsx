@@ -63,7 +63,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative h-[80vh] w-full flex flex-col justify-start items-center text-white px-4 overflow-hidden pt-[40vh]">
+    <section className="relative h-[60vh] w-full flex flex-col justify-start items-center text-white px-4 overflow-hidden pt-[40vh]">
 
       <div className="relative z-10 flex flex-col items-center text-center">
         <h1

@@ -112,7 +112,7 @@ export default function WorkFlowSection() {
               >
                 {/* Tekst */}
                 <div className="w-full md:w-1/2 px-4 md:px-8 text-center md:text-left">
-                  <div className="text-[80px] md:text-[120px] font-black text-yellow-700 opacity-10 leading-none select-none mb-2">
+                  <div className="text-[80px] md:text-[120px] font-black text-yellow-700 opacity-30 leading-none select-none mb-2">
                     {i + 1}
                   </div>
                   <h3 className="text-xl md:text-3xl font-semibold">{step.title}</h3>

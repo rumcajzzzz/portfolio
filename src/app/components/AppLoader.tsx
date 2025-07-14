@@ -30,7 +30,7 @@ export default function AppLoader({ children }: { children: React.ReactNode }) {
 					alt="Logo Rumcajz"
 					width={120}
 					height={120}
-					className="animate-pulse"
+					className="animate-pulse invert"
 				/>
 			</div>
 		);
