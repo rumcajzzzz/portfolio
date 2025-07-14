@@ -53,13 +53,19 @@ export default function WorkFlowSection() {
   const sectionHeight = introHeight + stepHeight * (totalSteps - 1) + lastStepHeight;
 
   useEffect(() => {
+    const introHeight = 600;
+    const stepHeight = 600;
+    const lastStepHeight = 1800;
+    const totalSteps = steps.length;
+    const sectionHeight = introHeight + stepHeight * (totalSteps - 1) + lastStepHeight;
+  
     const handleScroll = () => {
       if (!sectionRef.current) return;
-
+  
       const sectionTop = sectionRef.current.offsetTop;
       const scrollY = window.scrollY;
       const relativeScroll = scrollY - sectionTop;
-
+  
       if (relativeScroll >= 0 && relativeScroll < sectionHeight) {
         if (relativeScroll < introHeight) {
           setStepIndex(-1);
@@ -73,12 +79,13 @@ export default function WorkFlowSection() {
         setStepIndex(-1);
       }
     };
-
+  
     window.addEventListener('scroll', handleScroll);
     handleScroll();
-
+  
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [sectionHeight]);
+  }, []);
+  
 
   return (
     <div style={{ height: `${sectionHeight}px` }} ref={sectionRef}>

@@ -11,7 +11,7 @@ export default function TypewriterText() {
 
   useEffect(() => {
     const currentWord = words[currentWordIndex];
-    let typingSpeed = isDeleting ? 80 : 100;
+    const typingSpeed = isDeleting ? 80 : 100;
     let timeout: NodeJS.Timeout;
 
     if (!isDeleting && displayedText === currentWord) {
