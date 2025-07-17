@@ -19,7 +19,7 @@ export default function FadeObserver() {
         });
       },
       {
-        rootMargin: '-40% 0px -40% 0px',
+        rootMargin: '-20% 0px -20% 0px',
         threshold: 0,
       }
     );

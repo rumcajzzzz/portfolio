@@ -1,42 +1,17 @@
-'use client';
+'use client'
 
-import Image from "next/image";
+import Image from 'next/image'
+import { Project } from '../types'
 
-const projects = [
-	{
-	  title: 'VetShop - Sklep zoologiczny',
-	  description: 'Responsywna strona sklepu zoologicznego z intuicyjnym designem i prostą nawigacją.',
-	  imageUrl: '/vet-shop.png',
-	  projectUrl: 'https://vetshop-service.netlify.app',
-	},
-	{
-	  title: 'IT Service Shop',
-	  description: 'Platforma usług IT z nowoczesnym UI i łatwym dostępem do informacji.',
-	  imageUrl: '/it-shop.png',
-	  projectUrl: 'https://it-service-shop.netlify.app',
-	},
-	{
-	  title: 'Hairdresser Service',
-	  description: 'Strona dla salonu fryzjerskiego z systemem rezerwacji i responsywnym designem.',
-	  imageUrl: '/hairdresser-shop.png',
-	  projectUrl: 'https://hairdresser-service.netlify.app',
-	},
-	{
-	  title: 'Car Mechanic Shop',
-	  description: 'Serwis mechaniczny z intuicyjnym interfejsem i szybką prezentacją usług.',
-	  imageUrl: '/auto-shop.png',
-	  projectUrl: 'https://car-mechanic-shop.netlify.app',
-	},
-	{
-		title: 'Pizzeria',
-		description: 'Smakowita strona pizzerii z menu, danymi kontaktowymi i nowoczesnym wyglądem.',
-		imageUrl: '/pizza-shop.png',
-		projectUrl: 'https://pizzashoprumcajsdev.netlify.app',
-	  },
-  ];
-  
+interface ProjectsSectionProps {
+  projects: Project[]
+}
 
-export default function ProjectsSection() {
+export default function ProjectsSection({ projects }: ProjectsSectionProps) {
+  if (!projects.length) {
+    return <p>Brak projektów do wyświetlenia.</p>
+  }
+
   return (
     <section
       id="projects"
@@ -47,17 +22,17 @@ export default function ProjectsSection() {
       </h2>
 
       <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full fade-in-on-scroll">
-        {projects.map(({ title, description, imageUrl, projectUrl}, i) => (
+        {projects.map(({ id, title, description, image_url, project_url }) => (
           <a
-            key={i}
-            href={projectUrl}
+            key={id}
+            href={project_url}
             target="_blank"
             rel="noopener noreferrer"
             className="group border border-neutral-700 rounded-lg overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-transform duration-300"
           >
             <div className="h-48 w-full relative overflow-hidden">
               <Image
-                src={imageUrl}
+                src={image_url}
                 alt={title}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -74,5 +49,5 @@ export default function ProjectsSection() {
         ))}
       </div>
     </section>
-  );
+  )
 }

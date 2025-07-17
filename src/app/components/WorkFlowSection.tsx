@@ -89,53 +89,54 @@ export default function WorkFlowSection() {
 
   return (
     <div style={{ height: `${sectionHeight}px` }} ref={sectionRef}>
-      <div className="sticky top-0 h-screen w-full bg-black px-4 md:px-6 flex flex-col justify-center items-center">
+      <div className="sticky top-0 h-screen w-full bg-black px-2 sm:px-4 md:px-6 flex flex-col justify-center items-center">
         <h2
-          className={`text-4xl md:text-6xl font-bold mb-16 text-center text-white transition-opacity duration-700 ${
+          className={`text-3xl sm:text-4xl md:text-6xl font-bold mb-10 sm:mb-16 text-center text-white transition-opacity duration-700 ${
             stepIndex === -1 ? 'opacity-100' : 'opacity-50'
           }`}
         >
           Jak wygląda praca ze mną?
         </h2>
 
-        <div className="w-full max-w-6xl relative h-[500px] md:h-[450px]">
+        <div className="w-full max-w-5xl relative h-[350px] sm:h-[400px] md:h-[450px]">
           {steps.map((step, i) => {
             const isActive = i === stepIndex;
             return (
               <div
                 key={i}
-                className={`absolute inset-0 flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-6 md:gap-12 transition-all duration-700 text-white ${
+                className={`absolute inset-0 flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-4 sm:gap-6 md:gap-2 transition-all duration-700 text-white ${
                   isActive
                     ? 'opacity-100 translate-x-0 pointer-events-auto'
                     : 'opacity-0 -translate-x-20 pointer-events-none'
                 }`}
               >
                 {/* Tekst */}
-                <div className="w-full md:w-1/2 px-4 md:px-8 text-center md:text-left">
-                  <div className="text-[80px] md:text-[120px] font-black text-yellow-700 opacity-30 leading-none select-none mb-2">
+                <div className="w-full md:w-1/2 px-2 sm:px-4 md:px-8 text-center md:text-left">
+                  <div className="text-[50px] sm:text-[70px] md:text-[120px] font-black text-yellow-700 opacity-30 leading-none select-none mb-1 sm:mb-2">
                     {i + 1}
                   </div>
-                  <h3 className="text-xl md:text-3xl font-semibold">{step.title}</h3>
-                  <p className="text-md md:text-lg mt-3 text-neutral-400">{step.description}</p>
+                  <h3 className="text-lg sm:text-xl md:text-3xl font-semibold">{step.title}</h3>
+                  <p className="text-sm sm:text-md md:text-lg mt-2 sm:mt-3 text-neutral-400">{step.description}</p>
                 </div>
 
                 {/* Animacja Lottie */}
-                <div className="w-full md:w-1/2 flex justify-center md:justify-end px-4 md:px-8">
-                  <div className="bg-[#0a0a0a] rounded-lg p-4 shadow-md" style={{ maxHeight: '260px' }}>
+                <div className="w-full md:w-1/2 flex justify-center md:justify-end px-2 sm:px-4 md:px-8 ">
+                  <div className="bg-[#0a0a0a] rounded-lg p-2 sm:p-4 shadow-md lottie-style" style={{ maxHeight: '180px', sm: { maxHeight: '220px' } }}>
                     <Lottie
                       key={isActive ? `active-${i}` : `inactive-${i}`}
                       animationData={workflowAnimations[i]}
                       loop={true}
-                      style={{ maxHeight: '220px', width: 'auto' }}
+                      style={{ maxHeight: '180px', width: 'auto'}
+                    }
                     />
                   </div>
                 </div>
-                
               </div>
             );
           })}
         </div>
       </div>
     </div>
+
   );
 }

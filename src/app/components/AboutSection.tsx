@@ -31,7 +31,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative w-full h-screen px-6 py-24 flex flex-col items-center justify-center overflow-hidden"
+      className="relative w-full min-h-screen px-6 py-24 flex flex-col items-center justify-center overflow-hidden"
     >
 
       {/* TŁO Z PARTICLES */}

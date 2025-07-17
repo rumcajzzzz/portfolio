@@ -22,6 +22,7 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: clamp(12px, 1.5vw, 18px);
 
   .fade-in-on-scroll,
   .fade-in-on-scroll-soft {
@@ -68,3 +69,6 @@ body {
   font-weight: normal;
 }
 
+.lottie-style {
+  max-width: 75vw;
+}

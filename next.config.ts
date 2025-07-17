@@ -1,9 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    domains: ['ukmtpgluhrntudjjpkgj.supabase.co'],
   },
-};
+}
 
-export default nextConfig;
+module.exports = nextConfig
