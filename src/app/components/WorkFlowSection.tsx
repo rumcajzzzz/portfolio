@@ -121,7 +121,7 @@ export default function WorkFlowSection() {
 
                 {/* Animacja Lottie */}
                 <div className="w-full md:w-1/2 flex justify-center md:justify-end px-2 sm:px-4 md:px-8 ">
-                  <div className="bg-[#0a0a0a] rounded-lg p-2 sm:p-4 shadow-md lottie-style" style={{ maxHeight: '180px', sm: { maxHeight: '220px' } }}>
+                  <div className="bg-[#0a0a0a] rounded-lg p-2 sm:p-4 shadow-md lottie-style max-h-[180px] sm:max-h-[220px]">
                     <Lottie
                       key={isActive ? `active-${i}` : `inactive-${i}`}
                       animationData={workflowAnimations[i]}
@@ -131,12 +131,12 @@ export default function WorkFlowSection() {
                     />
                   </div>
                 </div>
+                
               </div>
             );
           })}
         </div>
       </div>
     </div>
-
   );
 }
