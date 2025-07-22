@@ -9,10 +9,7 @@ interface ProjectsSectionProps {
 }
 
 export default function ProjectsSection({ projects }: ProjectsSectionProps) {
-  if (!projects.length) {
-    return <p>Brak projektów do wyświetlenia.</p>
-  }
-
+ 
   useEffect(() => {
     const elements = document.querySelectorAll('.fade-in-on-scroll')
     const observer = new IntersectionObserver((entries) => {
@@ -29,6 +26,9 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
     return () => observer.disconnect()
   }, [projects]) 
 
+  if (!projects.length) {
+    return <p>Brak projektów do wyświetlenia.</p>
+  }
 
   return (
     <section
