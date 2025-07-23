@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Lottie from 'lottie-react';
+import { ChevronDown } from 'lucide-react';
 
 import workflow1 from '@/assets/lottie/workflow1.json';
 import workflow2 from '@/assets/lottie/workflow2.json';
@@ -45,12 +46,14 @@ const steps = [
 export default function WorkFlowSection() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const [stepIndex, setStepIndex] = useState(-1);
+  const [isScrollBlocked, setIsScrollBlocked] = useState(false);
 
   const introHeight = 600;
   const stepHeight = 600;
   const lastStepHeight = 1800;
   const totalSteps = steps.length;
   const sectionHeight = introHeight + stepHeight * (totalSteps - 1) + lastStepHeight;
+  const canChangeStepRef = useRef(true);
 
   useEffect(() => {
     const introHeight = 600;
@@ -67,24 +70,48 @@ export default function WorkFlowSection() {
       const relativeScroll = scrollY - sectionTop;
   
       if (relativeScroll >= 0 && relativeScroll < sectionHeight) {
+        let newIndex = -1;
+  
         if (relativeScroll < introHeight) {
-          setStepIndex(-1);
+          newIndex = -1;
         } else if (relativeScroll < introHeight + stepHeight * (totalSteps - 1)) {
-          const currentStep = Math.floor((relativeScroll - introHeight) / stepHeight);
-          setStepIndex(currentStep);
+          newIndex = Math.floor((relativeScroll - introHeight) / stepHeight);
         } else {
-          setStepIndex(totalSteps - 1);
+          newIndex = totalSteps - 1;
         }
-      } else if (relativeScroll < 0) {
-        setStepIndex(-1);
-      }
+  
+        if (newIndex !== stepIndex && canChangeStepRef.current) {
+          canChangeStepRef.current = false;
+          setStepIndex(newIndex);
+          setIsScrollBlocked(true);
+
+          setTimeout(() => {
+            setIsScrollBlocked(false);
+            canChangeStepRef.current = true;
+          }, 1200);
+
+        } } else if (relativeScroll < 0 && stepIndex !== -1) 
+         {  
+           setStepIndex(-1);
+         }
     };
   
     window.addEventListener('scroll', handleScroll);
     handleScroll();
   
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.body.style.overflow = ''; 
+    };
+  }, [stepIndex]);
+  
+  useEffect(() => {
+    if (isScrollBlocked) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isScrollBlocked]);
   
 
   return (
@@ -110,7 +137,7 @@ export default function WorkFlowSection() {
                     : 'opacity-0 -translate-x-20 pointer-events-none'
                 }`}
               >
-                {/* Tekst */}
+
                 <div className="w-full md:w-1/2 px-2 sm:px-4 md:px-8 text-center md:text-left">
                   <div className="text-[50px] sm:text-[70px] md:text-[120px] font-black text-yellow-700 opacity-30 leading-none select-none mb-1 sm:mb-2">
                     {i + 1}
@@ -119,7 +146,6 @@ export default function WorkFlowSection() {
                   <p className="text-sm sm:text-md md:text-lg mt-2 sm:mt-3 text-neutral-400">{step.description}</p>
                 </div>
 
-                {/* Animacja Lottie */}
                 <div className="w-full md:w-1/2 flex justify-center md:justify-end px-2 sm:px-4 md:px-8 ">
                   <div className="bg-[#0a0a0a] rounded-lg p-2 sm:p-4 shadow-md lottie-style max-h-[180px] sm:max-h-[220px]">
                     <Lottie
@@ -136,6 +162,19 @@ export default function WorkFlowSection() {
             );
           })}
         </div>
+
+        {stepIndex === steps.length - 1 && (
+          <div className="absolute bottom-10 flex justify-center w-full animate-bounce">
+            <button
+              onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
+              className="text-white text-3xl opacity-70 hover:opacity-100 transition-opacity"
+              aria-label="Przejdź dalej"
+            >
+              <ChevronDown size={32} />
+            </button>
+          </div>
+        )}
+
       </div>
     </div>
   );
