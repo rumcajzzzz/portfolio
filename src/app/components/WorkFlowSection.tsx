@@ -16,7 +16,6 @@ const workflowAnimations = [
   workflow4,
 ];
 
-
 const steps = [
   {
     title: 'Szybki kontakt',
@@ -39,9 +38,6 @@ const steps = [
       'Pomagam z domeną i uruchomieniem strony. Wszystko działa bez zarzutu – Ty możesz skupić się na biznesie.',
   },
 ];
-
-
-
 
 export default function WorkFlowSection() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -113,7 +109,6 @@ export default function WorkFlowSection() {
     }
   }, [isScrollBlocked]);
   
-
   return (
     <div style={{ height: `${sectionHeight}px` }} ref={sectionRef}>
       <div className="sticky top-0 h-screen w-full bg-black px-2 sm:px-4 md:px-6 flex flex-col justify-center items-center">
@@ -139,11 +134,11 @@ export default function WorkFlowSection() {
               >
 
                 <div className="w-full md:w-1/2 px-2 sm:px-4 md:px-8 text-center md:text-left">
-                  <div className="text-[50px] sm:text-[70px] md:text-[120px] font-black text-yellow-700 opacity-30 leading-none select-none mb-1 sm:mb-2">
+                  <div className="text-[80px] sm:text-[100px] md:text-[120px] font-black text-yellow-700 opacity-30 leading-none select-none mb-1 sm:mb-2 md:translate-y-10 md:-translate-x-5 sm:translate-y-12 sm:-translate-x-38">
                     {i + 1}
                   </div>
-                  <h3 className="text-lg sm:text-xl md:text-3xl font-semibold">{step.title}</h3>
-                  <p className="text-sm sm:text-md md:text-lg mt-2 sm:mt-3 text-neutral-400">{step.description}</p>
+                  <h3 className="text-3xl font-semibold">{step.title}</h3>
+                  <p className="mx-32 py-6 text-sm sm:text-md md:text-lg mt-2 sm:mt-3 md:mx-0 text-neutral-400">{step.description}</p>
                 </div>
 
                 <div className="w-full md:w-1/2 flex justify-center md:justify-end px-2 sm:px-4 md:px-8 ">

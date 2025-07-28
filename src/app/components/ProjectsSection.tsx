@@ -40,7 +40,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
         Moje Projekty
       </h2>
 
-      <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full">
+      <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-[75vw] md:w-full">
         {projects.slice().reverse().map(({ id, title, description, image_url, project_url }) => (
           <a
             key={id}
