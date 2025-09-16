@@ -43,6 +43,7 @@ export default function WorkFlowSection() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const [stepIndex, setStepIndex] = useState(-1);
   const [isScrollBlocked, setIsScrollBlocked] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const introHeight = 600;
   const stepHeight = 600;
@@ -52,22 +53,16 @@ export default function WorkFlowSection() {
   const canChangeStepRef = useRef(true);
 
   useEffect(() => {
-    const introHeight = 600;
-    const stepHeight = 600;
-    const lastStepHeight = 1800;
-    const totalSteps = steps.length;
-    const sectionHeight = introHeight + stepHeight * (totalSteps - 1) + lastStepHeight;
-  
     const handleScroll = () => {
       if (!sectionRef.current) return;
-  
+
       const sectionTop = sectionRef.current.offsetTop;
       const scrollY = window.scrollY;
       const relativeScroll = scrollY - sectionTop;
-  
+
       if (relativeScroll >= 0 && relativeScroll < sectionHeight) {
         let newIndex = -1;
-  
+
         if (relativeScroll < introHeight) {
           newIndex = -1;
         } else if (relativeScroll < introHeight + stepHeight * (totalSteps - 1)) {
@@ -75,40 +70,46 @@ export default function WorkFlowSection() {
         } else {
           newIndex = totalSteps - 1;
         }
-  
+
         if (newIndex !== stepIndex && canChangeStepRef.current) {
           canChangeStepRef.current = false;
           setStepIndex(newIndex);
-          setIsScrollBlocked(true);
 
-          setTimeout(() => {
-            setIsScrollBlocked(false);
+          // jeśli osiągnięto ostatni krok, ustawiamy completed
+          if (newIndex === totalSteps - 1) {
+            setIsCompleted(true);
+          }
+
+          // blokada scrolla tylko jeśli animacja nie jest ukończona
+          if (!isCompleted) {
+            setIsScrollBlocked(true);
+            setTimeout(() => {
+              setIsScrollBlocked(false);
+              canChangeStepRef.current = true;
+            }, 1200);
+          } else {
+            // od razu odblokowujemy, jeśli completed
             canChangeStepRef.current = true;
-          }, 1200);
-
-        } } else if (relativeScroll < 0 && stepIndex !== -1) 
-         {  
-           setStepIndex(-1);
-         }
+          }
+        }
+      } else if (relativeScroll < 0 && stepIndex !== -1) {
+        setStepIndex(-1);
+      }
     };
-  
+
     window.addEventListener('scroll', handleScroll);
     handleScroll();
-  
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      document.body.style.overflow = ''; 
-    };
-  }, [stepIndex]);
-  
-  useEffect(() => {
-    if (isScrollBlocked) {
-      document.body.style.overflow = 'hidden';
-    } else {
       document.body.style.overflow = '';
-    }
-  }, [isScrollBlocked]);
-  
+    };
+  }, [stepIndex, isCompleted]);
+
+  useEffect(() => {
+    document.body.style.overflow = isScrollBlocked && !isCompleted ? 'hidden' : '';
+  }, [isScrollBlocked, isCompleted]);
+
   return (
     <div style={{ height: `${sectionHeight}px` }} ref={sectionRef}>
       <div className="sticky top-0 h-screen w-full bg-black px-2 sm:px-4 md:px-6 flex flex-col justify-center items-center">
@@ -147,12 +148,11 @@ export default function WorkFlowSection() {
                       key={isActive ? `active-${i}` : `inactive-${i}`}
                       animationData={workflowAnimations[i]}
                       loop={true}
-                      style={{ maxHeight: '180px', width: 'auto'}
-                    }
+                      style={{ maxHeight: '180px', width: 'auto' }}
                     />
                   </div>
                 </div>
-                
+
               </div>
             );
           })}
